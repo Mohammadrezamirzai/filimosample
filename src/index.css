@@ -1,0 +1,6 @@
+@import "tailwindcss";
+.ficon:hover {
+  cursor: pointer;
+  filter: invert(53%) sepia(50%) saturate(100%) hue-rotate(326deg)
+    brightness(101%) contrast(96%);
+}
