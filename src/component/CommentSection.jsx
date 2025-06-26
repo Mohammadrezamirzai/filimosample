@@ -7,12 +7,11 @@ import Comment from "./Comment.jsx";
 
 export default function CommentSection() {
   return (
-    <div className="flex flex-col mb-10 items-center justify-center">
-      <h4 className="text-gray-100 font-bold text-2xl">
+    <div className="flex flex-col mb-10 items-center justify-center bg-gradient-to-br from-[#232526] via-[#414345] to-[#232526] rounded-3xl py-10 px-4 shadow-xl">
+      <h4 className="text-gray-100 font-extrabold text-3xl mb-6 tracking-tight drop-shadow-lg">
         نظرات کاربران بعد از تماشای فیلیمو
       </h4>
-
-      <div className="w-[700px] md:w-full h-[200px] flex items-center justify-center  px-10">
+      <div className="w-[700px] md:w-full h-[220px] flex items-center justify-center px-4 md:px-10">
         <Swiper
           modules={[Navigation]}
           slidesPerView={1}
@@ -34,7 +33,7 @@ export default function CommentSection() {
               spaceBetween: 50,
             },
           }}
-          className=" flex items-center justify-center relative">
+          className="flex items-center justify-center relative rounded-2xl overflow-visible">
           <SwiperSlide>
             <Comment
               name={"احسان"}
@@ -45,7 +44,7 @@ export default function CommentSection() {
             <Comment
               name={"سالار"}
               description={
-                "عالییییییییییییییی پیشنهاد میکنم نصب کنید فیلم های رایگان هم داره پس نصب کنید"
+                "عالیییییییییییییییی پیشنهاد میکنم نصب کنید فیلم های رایگان هم داره پس نصب کنید"
               }
             />
           </SwiperSlide>

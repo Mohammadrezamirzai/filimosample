@@ -71,7 +71,7 @@ export default function Films({ status }) {
           </div>
         </div>
       </section>
-      <div className={`${status === 1 ? "hidden" : "flex"}`}>
+      <div className={`${status === 1 ? "hidden " : "flex "}`}>
         <Details
           img={bibadanBg}
           show={focusIndex}

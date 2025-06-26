@@ -8,17 +8,21 @@ export default function SubscriptionPanel({ isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4 mt-10">
-      <div className="bg-gray-900 rounded-2xl p-8 max-w-4xl w-full max-h-[85vh]  border border-gray-700 shadow-2xl">
+      <div className="bg-gray-900 rounded-2xl p-8 max-w-4xl w-full max-h-[85vh] border border-gray-700 shadow-2xl relative">
+        <button
+          onClick={onClose}
+          className="absolute cursor-pointer top-4 left-4 bg-black/60 hover:bg-black/80 text-white text-2xl rounded-full w-10 h-10 flex items-center justify-center shadow-lg transition-all duration-200 z-20"
+          aria-label="بستن"
+        >
+          <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
         {/* Header */}
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-white mb-2">انتخاب اشتراک</h2>
           <p className="text-gray-400">بهترین پلن را برای خود انتخاب کنید</p>
-          <button
-            onClick={onClose}
-            className="absolute top-4 left-4 text-gray-400 hover:text-white text-2xl cursor-pointer"
-          >
-            ×
-          </button>
         </div>
 
         {/* Plans Grid */}

@@ -2,12 +2,9 @@ import Accordianval from "./Accordianval.jsx";
 
 export default function Accordian() {
   return (
-    <section className=" bg-[#1817178a] flex flex-col items-center py-16 space-y-2">
-      <h3 className="text-white text-3xl font-bold">سوالات متدوال</h3>
-      <p className="text-gray-300 py-1 mb-4">
-        سوال شایع دیگر کاربران شاید برای شما نیز پیشامده باشد
-
-      </p>
+    <section className="bg-white/10 backdrop-blur-md shadow-2xl border-t-4 border-orange-400 flex flex-col items-center py-20 px-2 md:px-0 rounded-3xl space-y-4">
+      <h3 className="text-white text-4xl font-extrabold mb-2 drop-shadow-lg">سوالات متدوال</h3>
+      <p className="text-gray-300 py-1 mb-6 text-base">سوال شایع دیگر کاربران شاید برای شما نیز پیشامده باشد</p>
 
       <Accordianval
         title={"آیا می‌توانم فیلم‌های موجود در فیلیمو را دانلود کنم؟"}

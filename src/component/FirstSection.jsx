@@ -20,7 +20,7 @@ export default function FirstSection() {
   }, [images.length]);
 
   return (
-    <section className="relative h-screen min-h-[600px] overflow-hidden">
+    <section className="relative h-screen min-h-[600px] overflow-hidden mt-16">
       {/* Background Images with Smooth Transitions */}
       <div className="absolute inset-0">
         {images.map((image, index) => (
