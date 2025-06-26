@@ -1,5 +1,8 @@
 # Filimo Persian Streaming Service (React/Vite)
 
+![Screenshot (30)](https://github.com/user-attachments/assets/a4b2e538-0465-4d8b-ae8a-87eb912270f9)
+
+
 فیلیمو (Filimo) is a modern, RTL-friendly Persian streaming service web app built with React, Vite, and Tailwind CSS. It features a beautiful, responsive UI, animated backgrounds, and a clean, maintainable codebase. The project is designed for a premium user experience, with RTL support, Persian text, and modern design patterns throughout.
 
 ## Features
