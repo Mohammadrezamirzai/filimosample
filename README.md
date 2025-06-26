@@ -1,5 +1,7 @@
 # Filimo-sample
-![Screenshot (6)](https://github.com/user-attachments/assets/a3d7c1ae-c0db-4794-9b77-b4ed1821dbdb)
+
+![Screenshot (28)](https://github.com/user-attachments/assets/5cb9cffd-3b24-406e-b84f-facfbcf5686c)
+
 
 - Developed by mohammadreza mirzai
 
