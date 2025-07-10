@@ -11,6 +11,8 @@
 - **Responsive Design**: Mobile-first, with a hamburger menu, responsive buttons, and adaptive layouts.
 - **Animated Hero Section**: Smooth background transitions, animated gradients, and engaging CTAs.
 - **Authentication**: Signup and Login forms with robust validation and clean UX.
+- **Profile Dropdown**: After login/signup, the Navbar shows a profile icon. Clicking it opens a modern dropdown with dashboard and logout options, styled to match the rest of the app.
+- **Logout Functionality**: Securely log out from the dropdown, which updates the Navbar and redirects to home.
 - **Subscription Panel**: Interactive, modern subscription plan selector with summary and highlight for popular plans.
 - **Info Sections**: Glassmorphism, SVG icons, and device compatibility highlights.
 - **Cinema & Kids Sections**: Modern, playful layouts for cinema and kids content.
@@ -74,6 +76,7 @@ filimosample/
 - **Images:** Place new images in `src/assets/img` and import as needed.
 - **Validation:** Add or update validation logic in `src/utils/validation`.
 - **Data:** Add or update static data in `src/data`.
+- **Navbar Profile Dropdown:** The Navbar automatically shows a profile icon after login/signup. Clicking it opens a dropdown with dashboard and logout, styled to match the app's glassmorphism and color scheme.
 
 ## Credits
 

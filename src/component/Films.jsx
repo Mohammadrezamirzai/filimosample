@@ -21,6 +21,7 @@ export default function Films({ status }) {
   function handleFocus(index) {
     setFocusIndex(index);
   }
+
   return (
     <>
       <section className={`${status === 1 ? "hidden" : "flex"}`}>
@@ -38,6 +39,7 @@ export default function Films({ status }) {
               img={yadegar}
               x={2}
             />
+            
             <Poster
               focus={() => handleFocus(3)}
               focusNumber={focusIndex}
