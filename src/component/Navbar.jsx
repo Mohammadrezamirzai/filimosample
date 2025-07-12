@@ -1,17 +1,22 @@
 import { useState, useEffect, useRef } from "react";
 import Logo from "../assets/img/logo--color-white@128px.png";
-import SubscriptionPanel from "./SubscriptionPanel";
-import getData from "../utils/api/api";
+import SubscriptionPanel from "./Pages/SubscriptionPanel";
+import getData from "../utils/api/dataApi";
 import { useNavigate } from "react-router-dom";
 import ProfileIcon from "../assets/svg/profile.svg";
+import ConfirmModal from "./ConfirmModal";
 
 export default function Navbar() {
   const [openDropdown, setOpenDropdown] = useState(null); // 'series' or 'film' or null
-  const [showSubscription, setShowSubscription] = useState(false);
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("user"));
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    () => !!localStorage.getItem("user")
+  );
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const profileMenuRef = useRef(null);
+  const [logoutMessage, setLogoutMessage] = useState("");
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   // Update isLoggedIn state on login/logout (including multi-tab)
   useEffect(() => {
@@ -23,7 +28,10 @@ export default function Navbar() {
   // Close profile menu on outside click
   useEffect(() => {
     function handleClickOutside(event) {
-      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target)
+      ) {
         setShowProfileMenu(false);
       }
     }
@@ -36,18 +44,44 @@ export default function Navbar() {
   }, [showProfileMenu]);
 
   const handleLogout = () => {
+    setShowLogoutModal(true);
+  };
+
+  const confirmLogout = () => {
     localStorage.removeItem("user");
     setIsLoggedIn(false);
     setShowProfileMenu(false);
-    navigate("/");
+    setLogoutMessage("شما با موفقیت خارج شدید");
+    setShowLogoutModal(false);
+    setTimeout(() => {
+      setLogoutMessage("");
+      navigate("/");
+    }, 1500);
+  };
+
+  const cancelLogout = () => {
+    setShowLogoutModal(false);
   };
 
   const navigate = useNavigate();
 
-
   return (
     <>
-      <header className="flex px-8 z-100 fixed top-0 left-0 bg-black w-full h-[64px] opacity-90 ">
+      {/* Logout message toast */}
+      {logoutMessage && (
+        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg text-lg animate-fade-in-down">
+          {logoutMessage}
+        </div>
+      )}
+      <ConfirmModal
+        open={showLogoutModal}
+        onConfirm={confirmLogout}
+        onCancel={cancelLogout}
+        message="آیا مطمئن هستید که می‌خواهید خارج شوید؟"
+        confirmText="خروج"
+        cancelText="انصراف"
+      />
+      <header className="flex px-8 z-100 fixed top-0 left-0 bg-black w-full h-[64px] opacity-90 mb-10">
         {/* Hamburger for mobile */}
         <div className="md:hidden flex items-center w-[25%]">
           <button
@@ -73,30 +107,42 @@ export default function Navbar() {
               {showProfileMenu && (
                 <div
                   className="absolute right-0 mt-3 min-w-[160px] max-w-[220px] bg-white/5 backdrop-blur-xl rounded-2xl shadow-2xl z-50 border border-white/10 p-3 animate-fade-in-down"
-                  style={{ boxShadow: '0 8px 32px 0 rgba(0,0,0,0.18)', marginRight: '-10px' }}
-                >
+                  style={{
+                    boxShadow: "0 8px 32px 0 rgba(0,0,0,0.18)",
+                    marginRight: "-10px",
+                  }}>
                   {/* Arrow */}
                   <div
                     style={{
-                      position: 'absolute',
-                      top: '-10px',
-                      right: '18px',
+                      position: "absolute",
+                      top: "-10px",
+                      right: "18px",
                       width: 0,
                       height: 0,
-                      borderLeft: '10px solid transparent',
-                      borderRight: '10px solid transparent',
-                      borderBottom: '10px solid rgba(255,255,255,0.05)',
-                      filter: 'drop-shadow(0 -2px 4px rgba(0,0,0,0.10))',
-                    }}
-                  ></div>
+                      borderLeft: "10px solid transparent",
+                      borderRight: "10px solid transparent",
+                      borderBottom: "10px solid rgba(255,255,255,0.05)",
+                      filter: "drop-shadow(0 -2px 4px rgba(0,0,0,0.10))",
+                    }}></div>
                   <button
-                    onClick={() => { setShowProfileMenu(false); navigate("/dashboard"); }}
-                    className="block w-full text-right px-4 py-2 rounded-xl hover:bg-white/10 hover:text-green-400 transition-colors duration-150 font-medium text-sm mb-1 text-white">
+                    onClick={() => {
+                      setShowProfileMenu(false);
+                      navigate("/dashboard");
+                    }}
+                    className="block w-full cursor-pointer text-right px-4 py-2 rounded-xl hover:bg-green-500/90   transition-colors duration-150 font-medium text-sm mb-1 text-white">
                     داشبورد
                   </button>
                   <button
+                    onClick={() => {
+                      setShowProfileMenu(false);
+                      navigate("/favorites");
+                    }}
+                    className="block w-full cursor-pointer text-right px-4 py-2 rounded-xl hover:bg-orange-500/90 transition-colors duration-150 font-medium text-sm mb-1 text-white">
+                  مورد علاقه ها
+                  </button>
+                  <button
                     onClick={handleLogout}
-                    className="block w-full text-right px-4 py-2 rounded-xl hover:bg-gradient-to-r hover:from-orange-500 hover:to-pink-500 hover:text-white transition-colors duration-150 font-medium text-sm border-t border-white/10 mt-1 text-white">
+                    className="block w-full cursor-pointer text-right px-4 py-2 rounded-xl hover:bg-gradient-to-r hover:from-orange-500 hover:to-pink-500 hover:text-white transition-colors duration-150 font-medium text-sm border-t border-white/10 mt-1 text-white">
                     خروج
                   </button>
                 </div>
@@ -117,7 +163,7 @@ export default function Navbar() {
             </>
           )}
           <button
-            onClick={() => setShowSubscription(true)}
+            onClick={() => navigate("/subpanel")}
             className="flex font-bold text-white text-xs md:text-sm h-[40px] px-4 md:px-3 items-center bg-green-500 rounded-sm shadow-md duration-200 cursor-pointer hover:bg-green-800 justify-center">
             خرید اشتراک
           </button>
@@ -133,7 +179,11 @@ export default function Navbar() {
                     navigate("/dashboard");
                   }}
                   className="w-full flex items-center justify-center font-bold text-white text-base py-3 bg-gray-700 rounded shadow-md duration-200 cursor-pointer hover:bg-gray-800 mb-2">
-                  <img src={ProfileIcon} alt="Profile" className="h-7 w-7 mr-2" />
+                  <img
+                    src={ProfileIcon}
+                    alt="Profile"
+                    className="h-7 w-7 mr-2"
+                  />
                   پروفایل
                 </button>
                 <button
@@ -167,8 +217,7 @@ export default function Navbar() {
             )}
             <button
               onClick={() => {
-                setMobileMenuOpen(false);
-                setShowSubscription(true);
+                navigate("subpanel")
               }}
               className="w-11/12 font-bold text-white text-base py-3 bg-green-500 rounded shadow-md duration-200 cursor-pointer hover:bg-green-800">
               خرید اشتراک
@@ -178,13 +227,19 @@ export default function Navbar() {
 
         <div className="w-[75%]  flex items-center justify-end  space-x-6 text-white font-bold">
           <div className="hidden md:flex space-x-4 lg:space-x-6 text-sm md:text-md lg:text-lg">
-            <div className="duration-200 hover:text-orange-400 cursor-pointer mr-4" onClick={()=>navigate("/searching")}>
+            <div
+              className="duration-200 hover:text-orange-400 cursor-pointer mr-4"
+              onClick={() => navigate("/searching")}>
               جستجو
             </div>
-            <div className="duration-200 hover:text-orange-400 cursor-pointer" onClick={()=> navigate("/school")}>
+            <div
+              className="duration-200 hover:text-orange-400 cursor-pointer"
+              onClick={() => navigate("/school")}>
               فیلیمو مدرسه
             </div>
-            <div className="duration-200 hover:text-orange-400 cursor-pointer" onClick={()=> navigate("/collection")}>
+            <div
+              className="duration-200 hover:text-orange-400 cursor-pointer"
+              onClick={() => navigate("/collection")}>
               مجموعه ها
             </div>
             <div
@@ -347,23 +402,23 @@ export default function Navbar() {
               )}
             </div>
           </div>
-          {/* Language toggle and logo */}
-          <div className="flex items-center gap-2 mr-3">
 
+          <div className="flex items-center gap-2 mr-3">
             <div
               onClick={() => navigate("/")}
-              className="cursor-pointer flex duration-200 hover:text-orange-400 "
-            >
-              <img src={Logo} className="h-[36px] w-[90px] " onClick={getData} />
+              className="cursor-pointer flex duration-200 hover:text-orange-400 ">
+              <img
+                src={Logo}
+                className="h-[36px] w-[90px] "
+                onClick={getData}
+              />
             </div>
           </div>
         </div>
       </header>
 
-      <SubscriptionPanel
-        isOpen={showSubscription}
-        onClose={() => setShowSubscription(false)}
-      />
+
     </>
   );
 }
+

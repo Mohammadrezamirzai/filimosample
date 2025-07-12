@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { validateSignupForm, clearFieldError } from "../../utils/validation";
 import { useNavigate } from "react-router-dom";
+import eyeIcon from '../../assets/svg/eye.svg';
+import eyeOffIcon from '../../assets/svg/eye-off.svg';
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -15,6 +17,8 @@ export default function Signup() {
 
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -37,7 +41,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
+
 
     setIsLoading(true);
     try {
@@ -51,9 +55,10 @@ export default function Signup() {
       };
 
       localStorage.setItem("user", JSON.stringify(userData));
+      window.dispatchEvent(new Event('storage'));
       // Navigate to dashboard
 
-      navigate("/dashboard");
+      navigate("/");
       console.log(userData);
     } catch (error) {
       alert("خطا در ثبت نام. لطفا دوباره تلاش کنید.");
@@ -280,24 +285,21 @@ export default function Signup() {
                 رمز عبور
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <svg
-                    className="h-5 w-5 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                    />
-                  </svg>
+                <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                  <button
+                    type="button"
+                    tabIndex={-1}
+                    className="cursor-pointer"
+                    onClick={() => setShowPassword((v) => !v)}
+                    aria-label={showPassword ? "مخفی کردن رمز" : "نمایش رمز"}
+                  >
+                    <img src={showPassword ? eyeIcon : eyeOffIcon} alt="toggle password" className="h-5 w-5" />
+                  </button>
                 </div>
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={formData.password}
                   onChange={handleInputChange}
                   className={`w-full pr-10 pl-4 py-3 border rounded-xl bg-white/5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 ${
@@ -331,24 +333,21 @@ export default function Signup() {
                 تکرار رمز عبور
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                  <svg
-                    className="h-5 w-5 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+                <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                  <button
+                    type="button"
+                    tabIndex={-1}
+                    className="focus:outline-none  cursor-pointer"
+                    onClick={() => setShowConfirmPassword((v) => !v)}
+                    aria-label={showConfirmPassword ? "مخفی کردن رمز" : "نمایش رمز"}
+                  >
+                    <img src={showConfirmPassword ? eyeIcon : eyeOffIcon} alt="toggle password" className="h-5 w-5 cursor-pointer" />
+                  </button>
                 </div>
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
-                  type="password"
+                  type={showConfirmPassword ? "text" : "password"}
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
                   className={`w-full pr-10 pl-4 py-3 border rounded-xl bg-white/5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-transparent transition-all duration-200 ${
@@ -465,4 +464,5 @@ export default function Signup() {
       </div>
     </div>
   );
+
 }
